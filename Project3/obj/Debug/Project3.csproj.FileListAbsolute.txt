@@ -1,0 +1,10 @@
+C:\Users\damon_000\Documents\CIS300\Project3\Project3\obj\Debug\Project3.csprojResolveAssemblyReference.cache
+C:\Users\damon_000\Documents\CIS300\Project3\Project3\obj\Debug\Project3.Form1.resources
+C:\Users\damon_000\Documents\CIS300\Project3\Project3\obj\Debug\Project3.Properties.Resources.resources
+C:\Users\damon_000\Documents\CIS300\Project3\Project3\obj\Debug\Project3.csproj.GenerateResource.Cache
+C:\Users\damon_000\Documents\CIS300\Project3\Project3\obj\Debug\Project3.csproj.CoreCompileInputs.cache
+C:\Users\damon_000\Documents\CIS300\Project3\Project3\bin\Debug\Project3.exe.config
+C:\Users\damon_000\Documents\CIS300\Project3\Project3\bin\Debug\Project3.exe
+C:\Users\damon_000\Documents\CIS300\Project3\Project3\bin\Debug\Project3.pdb
+C:\Users\damon_000\Documents\CIS300\Project3\Project3\obj\Debug\Project3.exe
+C:\Users\damon_000\Documents\CIS300\Project3\Project3\obj\Debug\Project3.pdb
