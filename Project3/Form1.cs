@@ -28,8 +28,8 @@ namespace Project3
             
             if (uxOpenFileDialog.ShowDialog() == DialogResult.OK)
             {
-                try
-                {
+                //try
+                //{
                     if (uxDatesList.Items.Count > 0)
                     {
                         uxDatesList.DataSource = null;
@@ -54,16 +54,14 @@ namespace Project3
                             }
                         }
                     }
-                    for (int i = 0; i < wd.Count; i++)
-                    {
-                        uxDatesList.DataSource = wd[i].ToString();
-                    }
 
-                }catch(Exception ex)
-                {
-                    MessageBox.Show("Something Went Wrong\n" + ex.ToString());
+                    uxDatesList.DataSource = wd;
 
-                }
+                //}catch(Exception ex)
+                //{
+                //    MessageBox.Show("Something Went Wrong\n" + ex.ToString());
+
+                //}
             }
         }
 
@@ -74,20 +72,25 @@ namespace Project3
                 WeatherList temp = new WeatherList(wd);
                 ws.Push(temp);
                 wd.FilterTemp(Convert.ToDouble(uxTempSetting.ToString()), 1);
+
             }
             else if (uxBelowTemp.Checked)
             {
                 WeatherList temp = new WeatherList(wd);
                 ws.Push(temp);
-                wd.FilterTemp(Convert.ToDouble(uxTempSetting.ToString()), 0);
+                wd.FilterTemp(Convert.ToDouble(uxTempSetting.Value), 0);
             }
             else if (uxDateRange.Checked)
             {
                 try
                 {
-                    WeatherList temp = new WeatherList(wd);
-                    ws.Push(temp);
+                    //WeatherList temp = new WeatherList(wd);
+                    //ws.Push(temp);
                     wd.FilterRange(uxCalendar.SelectionRange.Start, uxCalendar.SelectionRange.End);
+                    uxDatesList.DataSource = null;
+                    uxDatesList.Items.Clear();
+                    
+                    uxDatesList.DataSource = wd;
                 }
                 catch(Exception ex)
                 {

@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Project3
 {
-    class WeatherList : IEnumerable<WeatherData>, IList<WeatherData>
+    class WeatherList : IList<WeatherData>, IEnumerable<WeatherData>, IList
     {
-        private Node<WeatherData> _head;
-        private Node<WeatherData> _tail;
+        private Node _head;//<WeatherData> _head;
+        private Node _tail;//<WeatherData> _tail;
         private int _size;
 
 
@@ -27,7 +27,7 @@ namespace Project3
 
         public void Add(WeatherData val)
         {
-            Node<WeatherData> newNode = new Node<WeatherData>(val);
+            Node newNode = new Node(val);//<WeatherData> newNode = new Node<WeatherData>(val);
             if (_size == 0)
             {
                 _head = newNode;
@@ -46,11 +46,16 @@ namespace Project3
         
         public WeatherList(WeatherList w)
         {
-            this._head = w._head;
-            while(w._head != null)
+            _head = null;
+            _tail = null;
+            _size = w._size;
+
+            Node temp = w._head;//<WeatherData> temp = w._head;
+            while(temp != null)
             {
-                this.Add(_head.Data);
-                w._head = w._head.Next;
+                this.Add(temp.Data);
+                temp = w._head.Next;
+                _size--;
             }
             
             //throw new NotImplementedException();
@@ -66,7 +71,7 @@ namespace Project3
 
         public void FilterRange(DateTime dt, DateTime dt2)
         {
-            Node<WeatherData> temp = _head;
+            Node temp = _head;//<WeatherData> temp = _head;
             while (temp != null)
             {
                 if(temp.Data.DateCheck<dt || _head.Data.DateCheck > dt2)
@@ -79,7 +84,7 @@ namespace Project3
 
         public void FilterTemp(double x, int button)
         {
-            Node<WeatherData> temp = _head;
+            Node temp = _head;//<WeatherData> temp = _head;
             while (temp != null)
             {
                 if(temp.Data.Temperature > x && button == 1)
@@ -97,7 +102,7 @@ namespace Project3
 
         public void FilterDateHistory(DateTime dt)
         {
-            Node<WeatherData> temp = _head;
+            Node temp = _head;//<WeatherData> temp = _head;
             while(temp != null)
             {
                 if(temp.Data.month!=dt.Month || temp.Data.day != dt.Day)
@@ -140,7 +145,54 @@ namespace Project3
 
 
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        public bool IsReadOnly => false; 
+
+        public bool IsFixedSize => false;
+
+        public object SyncRoot => throw new NotImplementedException();
+
+        public bool IsSynchronized => throw new NotImplementedException();
+
+        object IList.this[int index]
+        {
+            get
+            {
+                if (_size < index - 1)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+                Node cur = _head;//<WeatherData> cur = _head;
+                int i = 0;
+                while (cur != null)
+                {
+                    if (i == index)
+                    {
+                        return cur.Data;
+                    }
+                    cur = cur.Next;
+                    i++;
+                }
+                return default(WeatherData);
+            }
+            set
+            {
+                if (_size < index - 1)
+                {
+                    Node cur = _head;//<WeatherData> cur = _head;
+                    int i = 0;
+                    while (cur != null)
+                    {
+                        if (i == index)
+                        {
+                            cur.Data = (WeatherData)value;
+                            return;
+                        }
+                        cur = cur.Next;
+                        i++;
+                    }
+                }
+            }
+        }
 
         public WeatherData this[int index]
         {
@@ -150,7 +202,7 @@ namespace Project3
                 {
                     throw new IndexOutOfRangeException();
                 }
-                Node<WeatherData> cur = _head;
+                Node cur = _head;//<WeatherData> cur = _head;
                 int i = 0;
                 while(cur != null)
                 {
@@ -167,7 +219,7 @@ namespace Project3
             {
                 if (_size < index - 1)
                 {
-                    Node<WeatherData> cur = _head;
+                    Node cur = _head;//<WeatherData> cur = _head;
                     int i = 0;
                     while(cur != null)
                     {
@@ -228,10 +280,10 @@ namespace Project3
                 _size--;
                 return true;
             }
-            Node<WeatherData> temp = _head;
+            Node temp = _head;//<WeatherData> temp = _head;
             while(temp.Next != null)
             {
-                if (temp.Next.Data.Equals(item))
+                if (temp.Next.Data == item)
                 {
                     temp.Next = temp.Next.Next;
                     if (temp.Next == null) _tail = temp;
@@ -244,17 +296,41 @@ namespace Project3
             //throw new NotImplementedException();
         }
 
+        public int Add(object value)
+        {
+            this.Add((WeatherData)value);
+            return 1;
+        }
 
+        public bool Contains(object value)
+        {
+            throw new NotImplementedException();
+        }
 
+        public int IndexOf(object value)
+        {
+            throw new NotImplementedException();
+        }
 
+        public void Insert(int index, object value)
+        {
+            throw new NotImplementedException();
+        }
 
+        public void Remove(object value)
+        {
+            this.Remove((WeatherData)value);
+        }
 
+        public void CopyTo(Array array, int index)
+        {
+            throw new NotImplementedException();
+        }
 
-
-        private class Node<WeatherData>
+        private class Node//<WeatherData>
         {
             private WeatherData _data;
-            private Node<WeatherData> _next;
+            private Node _next;//<WeatherData> _next;
 
             public Node(WeatherData d)
             {
@@ -275,7 +351,7 @@ namespace Project3
                 }
             }
 
-            public Node<WeatherData> Next
+            public Node Next//<WeatherData> Next
             {
                 get
                 {
@@ -301,11 +377,11 @@ namespace Project3
 
         private class ListEnumerator : IEnumerator<WeatherData>
         {
-            private Node<WeatherData> _cur;
+            private Node _cur;//<WeatherData> _cur;
 
-            public ListEnumerator(Node<WeatherData> first)
+            public ListEnumerator(Node first)//<WeatherData> first)
             {
-                _cur = new Node<WeatherData>(default(WeatherData));
+                _cur = new Node(default(WeatherData));//<WeatherData>(default(WeatherData));
                 _cur.Next = first;
             }
 
