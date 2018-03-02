@@ -49,6 +49,20 @@ namespace Project3
                 return dt.Month;
             }
         }
+        public double Temperature
+        {
+            get
+            {
+                return temperature;
+            }
+        }
 
+        public DateTime DateCheck
+        {
+            get
+            {
+                return dt;
+            }
+        }
     }
 }

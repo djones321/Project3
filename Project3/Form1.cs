@@ -16,10 +16,12 @@ namespace Project3
         public Form1()
         {
             InitializeComponent();
+            
         }
 
 
-        List<WeatherData> wd = new List<WeatherData>();
+        WeatherList wd = new WeatherList();
+        Stack<WeatherList> ws = new Stack<WeatherList>();
 
         private void uxOpenMenu_Click(object sender, EventArgs e)   //More error checking here if time
         {
@@ -32,7 +34,7 @@ namespace Project3
                     {
                         uxDatesList.DataSource = null;
                         uxDatesList.Items.Clear();
-                        wd = new List<WeatherData>();
+                        wd = new WeatherList();
                     }
 
                     string name = uxOpenFileDialog.FileName;
@@ -52,8 +54,10 @@ namespace Project3
                             }
                         }
                     }
-                    uxDatesList.DataSource = wd;
-
+                    for (int i = 0; i < wd.Count; i++)
+                    {
+                        uxDatesList.DataSource = wd[i].ToString();
+                    }
 
                 }catch(Exception ex)
                 {
@@ -63,9 +67,55 @@ namespace Project3
             }
         }
 
+        private void uxFilterButton_Click(object sender, EventArgs e)
+        {
+            if (uxAboveTemp.Checked)
+            {
+                WeatherList temp = new WeatherList(wd);
+                ws.Push(temp);
+                wd.FilterTemp(Convert.ToDouble(uxTempSetting.ToString()), 1);
+            }
+            else if (uxBelowTemp.Checked)
+            {
+                WeatherList temp = new WeatherList(wd);
+                ws.Push(temp);
+                wd.FilterTemp(Convert.ToDouble(uxTempSetting.ToString()), 0);
+            }
+            else if (uxDateRange.Checked)
+            {
+                try
+                {
+                    WeatherList temp = new WeatherList(wd);
+                    ws.Push(temp);
+                    wd.FilterRange(uxCalendar.SelectionRange.Start, uxCalendar.SelectionRange.End);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Must select dates\n" + ex.ToString());
+                }
+            }
+            else if (uxThisDate.Checked)
+            {
+                try
+                {
+                    WeatherList temp = new WeatherList(wd);
+                    ws.Push(temp);
+                    wd.FilterDateHistory(uxCalendar.SelectionRange.Start);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Must select a date\n" + ex.ToString());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a filter");
+            }
+        }
 
-
-
-
+        private void uxUndoButton_Click(object sender, EventArgs e)
+        {
+            wd = new WeatherList(ws.Pop());
+        }
     }
 }

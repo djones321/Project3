@@ -43,41 +43,80 @@ namespace Project3
             //throw new NotImplementedException();
         }
 
-        //might have to start at head.next... 
-        //or a million other possibilities if something doesn't work
-        //check add and remove as well if problems occur
-        public void CopyWeatherList()
+        
+        public WeatherList(WeatherList w)
         {
-            if (_head == null)
+            this._head = w._head;
+            while(w._head != null)
             {
-                return;
+                this.Add(_head.Data);
+                w._head = w._head.Next;
             }
-
-            WeatherList w2 = new WeatherList();
-            Node<WeatherData> cur = _head;
-            while (cur != null)
-            {
-                w2.Add(cur.Data);
-                cur.Next = _head.Next;
-            }
-            return;
+            
             //throw new NotImplementedException();
         }
 
-        public void FilterRange()
+
+
+
+
+
+
+
+
+        public void FilterRange(DateTime dt, DateTime dt2)
         {
-            throw new NotImplementedException();
+            Node<WeatherData> temp = _head;
+            while (temp != null)
+            {
+                if(temp.Data.DateCheck<dt || _head.Data.DateCheck > dt2)
+                {
+                    this.Remove(temp.Data);
+                }
+                temp = temp.Next;
+            }
         }
 
-        public void FilterTemp()
+        public void FilterTemp(double x, int button)
         {
-            throw new NotImplementedException();
+            Node<WeatherData> temp = _head;
+            while (temp != null)
+            {
+                if(temp.Data.Temperature > x && button == 1)
+                {
+                    this.Remove(temp.Data);
+                }
+                else if(temp.Data.Temperature<x && button == 0)
+                {
+                    this.Remove(temp.Data);
+                }
+                temp = temp.Next;
+            }
+            //throw new NotImplementedException();
         }
 
-        public void FilterDateHistory()
+        public void FilterDateHistory(DateTime dt)
         {
-            throw new NotImplementedException();
+            Node<WeatherData> temp = _head;
+            while(temp != null)
+            {
+                if(temp.Data.month!=dt.Month || temp.Data.day != dt.Day)
+                {
+                    this.Remove(temp.Data);
+                }
+                temp = temp.Next;
+            }
+
+
+            //throw new NotImplementedException();
         }
+
+
+
+
+
+
+
 
 
 
@@ -174,6 +213,7 @@ namespace Project3
         {
             throw new NotImplementedException();
         }
+
 
         public bool Remove(WeatherData item)
         {

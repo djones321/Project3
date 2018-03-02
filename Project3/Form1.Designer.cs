@@ -29,23 +29,23 @@
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.uxDatesList = new System.Windows.Forms.ListBox();
             this.uxFileTab = new System.Windows.Forms.ToolStripMenuItem();
             this.uxOpenMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.uxDatesList = new System.Windows.Forms.ListBox();
             this.uxFilterBox = new System.Windows.Forms.GroupBox();
-            this.uxDateRange = new System.Windows.Forms.RadioButton();
-            this.uxBelowTemp = new System.Windows.Forms.RadioButton();
-            this.uxAboveTemp = new System.Windows.Forms.RadioButton();
             this.uxThisDate = new System.Windows.Forms.RadioButton();
+            this.uxAboveTemp = new System.Windows.Forms.RadioButton();
+            this.uxBelowTemp = new System.Windows.Forms.RadioButton();
+            this.uxDateRange = new System.Windows.Forms.RadioButton();
             this.uxFilterButton = new System.Windows.Forms.Button();
             this.uxUndoButton = new System.Windows.Forms.Button();
             this.uxCalendar = new System.Windows.Forms.MonthCalendar();
             this.uxTemperatureLabel = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.uxTempSetting = new System.Windows.Forms.NumericUpDown();
             this.uxOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             this.uxFilterBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxTempSetting)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -58,14 +58,6 @@
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // uxDatesList
-            // 
-            this.uxDatesList.FormattingEnabled = true;
-            this.uxDatesList.Location = new System.Drawing.Point(13, 28);
-            this.uxDatesList.Name = "uxDatesList";
-            this.uxDatesList.Size = new System.Drawing.Size(362, 264);
-            this.uxDatesList.TabIndex = 1;
-            // 
             // uxFileTab
             // 
             this.uxFileTab.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -77,9 +69,17 @@
             // uxOpenMenu
             // 
             this.uxOpenMenu.Name = "uxOpenMenu";
-            this.uxOpenMenu.Size = new System.Drawing.Size(152, 22);
+            this.uxOpenMenu.Size = new System.Drawing.Size(112, 22);
             this.uxOpenMenu.Text = "Open...";
             this.uxOpenMenu.Click += new System.EventHandler(this.uxOpenMenu_Click);
+            // 
+            // uxDatesList
+            // 
+            this.uxDatesList.FormattingEnabled = true;
+            this.uxDatesList.Location = new System.Drawing.Point(13, 28);
+            this.uxDatesList.Name = "uxDatesList";
+            this.uxDatesList.Size = new System.Drawing.Size(362, 264);
+            this.uxDatesList.TabIndex = 1;
             // 
             // uxFilterBox
             // 
@@ -94,29 +94,17 @@
             this.uxFilterBox.TabStop = false;
             this.uxFilterBox.Text = "Filter Options";
             // 
-            // uxDateRange
+            // uxThisDate
             // 
-            this.uxDateRange.AutoSize = true;
-            this.uxDateRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.uxDateRange.Location = new System.Drawing.Point(7, 20);
-            this.uxDateRange.Name = "uxDateRange";
-            this.uxDateRange.Size = new System.Drawing.Size(205, 21);
-            this.uxDateRange.TabIndex = 0;
-            this.uxDateRange.TabStop = true;
-            this.uxDateRange.Text = "Dates during selected range";
-            this.uxDateRange.UseVisualStyleBackColor = true;
-            // 
-            // uxBelowTemp
-            // 
-            this.uxBelowTemp.AutoSize = true;
-            this.uxBelowTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.uxBelowTemp.Location = new System.Drawing.Point(7, 55);
-            this.uxBelowTemp.Name = "uxBelowTemp";
-            this.uxBelowTemp.Size = new System.Drawing.Size(222, 21);
-            this.uxBelowTemp.TabIndex = 1;
-            this.uxBelowTemp.TabStop = true;
-            this.uxBelowTemp.Text = "Dates below given temperature";
-            this.uxBelowTemp.UseVisualStyleBackColor = true;
+            this.uxThisDate.AutoSize = true;
+            this.uxThisDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.uxThisDate.Location = new System.Drawing.Point(7, 125);
+            this.uxThisDate.Name = "uxThisDate";
+            this.uxThisDate.Size = new System.Drawing.Size(146, 21);
+            this.uxThisDate.TabIndex = 3;
+            this.uxThisDate.TabStop = true;
+            this.uxThisDate.Text = "This date in history";
+            this.uxThisDate.UseVisualStyleBackColor = true;
             // 
             // uxAboveTemp
             // 
@@ -130,17 +118,29 @@
             this.uxAboveTemp.Text = "Dates above given temperature";
             this.uxAboveTemp.UseVisualStyleBackColor = true;
             // 
-            // uxThisDate
+            // uxBelowTemp
             // 
-            this.uxThisDate.AutoSize = true;
-            this.uxThisDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.uxThisDate.Location = new System.Drawing.Point(7, 125);
-            this.uxThisDate.Name = "uxThisDate";
-            this.uxThisDate.Size = new System.Drawing.Size(146, 21);
-            this.uxThisDate.TabIndex = 3;
-            this.uxThisDate.TabStop = true;
-            this.uxThisDate.Text = "This date in history";
-            this.uxThisDate.UseVisualStyleBackColor = true;
+            this.uxBelowTemp.AutoSize = true;
+            this.uxBelowTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.uxBelowTemp.Location = new System.Drawing.Point(7, 55);
+            this.uxBelowTemp.Name = "uxBelowTemp";
+            this.uxBelowTemp.Size = new System.Drawing.Size(222, 21);
+            this.uxBelowTemp.TabIndex = 1;
+            this.uxBelowTemp.TabStop = true;
+            this.uxBelowTemp.Text = "Dates below given temperature";
+            this.uxBelowTemp.UseVisualStyleBackColor = true;
+            // 
+            // uxDateRange
+            // 
+            this.uxDateRange.AutoSize = true;
+            this.uxDateRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.uxDateRange.Location = new System.Drawing.Point(7, 20);
+            this.uxDateRange.Name = "uxDateRange";
+            this.uxDateRange.Size = new System.Drawing.Size(205, 21);
+            this.uxDateRange.TabIndex = 0;
+            this.uxDateRange.TabStop = true;
+            this.uxDateRange.Text = "Dates during selected range";
+            this.uxDateRange.UseVisualStyleBackColor = true;
             // 
             // uxFilterButton
             // 
@@ -151,6 +151,7 @@
             this.uxFilterButton.TabIndex = 3;
             this.uxFilterButton.Text = "Filter";
             this.uxFilterButton.UseVisualStyleBackColor = true;
+            this.uxFilterButton.Click += new System.EventHandler(this.uxFilterButton_Click);
             // 
             // uxUndoButton
             // 
@@ -161,6 +162,7 @@
             this.uxUndoButton.TabIndex = 4;
             this.uxUndoButton.Text = "Undo";
             this.uxUndoButton.UseVisualStyleBackColor = true;
+            this.uxUndoButton.Click += new System.EventHandler(this.uxUndoButton_Click);
             // 
             // uxCalendar
             // 
@@ -181,23 +183,23 @@
             this.uxTemperatureLabel.TabIndex = 6;
             this.uxTemperatureLabel.Text = "Temperature";
             // 
-            // numericUpDown1
+            // uxTempSetting
             // 
-            this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.numericUpDown1.Location = new System.Drawing.Point(641, 263);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.uxTempSetting.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.uxTempSetting.Location = new System.Drawing.Point(641, 263);
+            this.uxTempSetting.Maximum = new decimal(new int[] {
             120,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.uxTempSetting.Minimum = new decimal(new int[] {
             20,
             0,
             0,
             -2147483648});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(224, 23);
-            this.numericUpDown1.TabIndex = 7;
+            this.uxTempSetting.Name = "uxTempSetting";
+            this.uxTempSetting.Size = new System.Drawing.Size(224, 23);
+            this.uxTempSetting.TabIndex = 7;
             // 
             // uxOpenFileDialog
             // 
@@ -209,7 +211,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(923, 330);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.uxTempSetting);
             this.Controls.Add(this.uxTemperatureLabel);
             this.Controls.Add(this.uxCalendar);
             this.Controls.Add(this.uxUndoButton);
@@ -224,7 +226,7 @@
             this.menuStrip1.PerformLayout();
             this.uxFilterBox.ResumeLayout(false);
             this.uxFilterBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxTempSetting)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -245,7 +247,7 @@
         private System.Windows.Forms.Button uxUndoButton;
         private System.Windows.Forms.MonthCalendar uxCalendar;
         private System.Windows.Forms.Label uxTemperatureLabel;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown uxTempSetting;
         private System.Windows.Forms.OpenFileDialog uxOpenFileDialog;
     }
 }
