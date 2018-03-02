@@ -23,6 +23,11 @@ namespace Project3
         WeatherList wd = new WeatherList();
         Stack<WeatherList> ws = new Stack<WeatherList>();
 
+        /// <summary>
+        /// on open menu click, loads file and listbox contents
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void uxOpenMenu_Click(object sender, EventArgs e)   //More error checking here if time
         {
             
@@ -65,27 +70,39 @@ namespace Project3
             }
         }
 
+        /// <summary>
+        /// Button checks radio button and (attempts) to filter listbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
         private void uxFilterButton_Click(object sender, EventArgs e)
         {
             if (uxAboveTemp.Checked)
             {
                 WeatherList temp = new WeatherList(wd);
                 ws.Push(temp);
-                wd.FilterTemp(Convert.ToDouble(uxTempSetting.ToString()), 1);
+                wd.FilterTemp(Convert.ToDouble(uxTempSetting.Value), true);
+                uxDatesList.DataSource = null;
+                uxDatesList.Items.Clear();
+                uxDatesList.DataSource = wd;
 
             }
             else if (uxBelowTemp.Checked)
             {
                 WeatherList temp = new WeatherList(wd);
                 ws.Push(temp);
-                wd.FilterTemp(Convert.ToDouble(uxTempSetting.Value), 0);
+                wd.FilterTemp(Convert.ToDouble(uxTempSetting.Value), false);
+                uxDatesList.DataSource = null;
+                uxDatesList.Items.Clear();
+                uxDatesList.DataSource = wd;
             }
             else if (uxDateRange.Checked)
             {
                 try
                 {
-                    //WeatherList temp = new WeatherList(wd);
-                    //ws.Push(temp);
+                    WeatherList temp = new WeatherList(wd);
+                    ws.Push(temp);
                     wd.FilterRange(uxCalendar.SelectionRange.Start, uxCalendar.SelectionRange.End);
                     uxDatesList.DataSource = null;
                     uxDatesList.Items.Clear();
@@ -104,6 +121,9 @@ namespace Project3
                     WeatherList temp = new WeatherList(wd);
                     ws.Push(temp);
                     wd.FilterDateHistory(uxCalendar.SelectionRange.Start);
+                    uxDatesList.DataSource = null;
+                    uxDatesList.Items.Clear();
+                    uxDatesList.DataSource = wd;
                 }
                 catch (Exception ex)
                 {
@@ -116,9 +136,23 @@ namespace Project3
             }
         }
 
+        /// <summary>
+        /// should pop previous weatherlists and use those
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
         private void uxUndoButton_Click(object sender, EventArgs e)
         {
-            wd = new WeatherList(ws.Pop());
+            if (ws.Count > 0)
+            {
+                wd = new WeatherList(ws.Pop());
+                uxDatesList.DataSource = null;
+                uxDatesList.Items.Clear();
+                uxDatesList.DataSource = wd;
+            }
+            else
+                MessageBox.Show("No filters to undo");
         }
     }
 }

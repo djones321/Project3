@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace Project3
 {
-    class WeatherList : IList<WeatherData>, IEnumerable<WeatherData>, IList
+    class WeatherList : IEnumerable, IList
     {
-        private Node _head;//<WeatherData> _head;
-        private Node _tail;//<WeatherData> _tail;
+        private Node _head;
+        private Node _tail;
         private int _size;
-
-
 
         public WeatherList()
         {
@@ -22,15 +20,35 @@ namespace Project3
             _size = 0;
         }
 
+        public WeatherList(WeatherList w)
+        {
+            _head = null;
+            _tail = null;
+            _size = w._size;
+            int i = 0;
+            Node temp = w._head;
+            while (i < _size)
+            {
+                this.Add(temp.Data);
+                temp = temp.Next;
+                _size--;
+                i++;
+            }
+        }
+
         public int Count => _size;
 
 
-        public void Add(WeatherData val)
+
+        public int Add(WeatherData val)
         {
-            Node newNode = new Node(val);//<WeatherData> newNode = new Node<WeatherData>(val);
-            if (_size == 0)
+            Node newNode = new Node(val);
+            if (_head == null)
             {
                 _head = newNode;
+            }
+            if (_tail == null)
+            {
                 _tail = newNode;
             }
             else
@@ -40,72 +58,53 @@ namespace Project3
             }
 
             _size++;
+            return 1;
             //throw new NotImplementedException();
         }
 
-        
-        public WeatherList(WeatherList w)
+        public void FilterTemp(double x, bool button)
         {
-            _head = null;
-            _tail = null;
-            _size = w._size;
-
-            Node temp = w._head;//<WeatherData> temp = w._head;
-            while(temp != null)
+            Node temp = _head;
+            int i = 0;
+            while (i < _size)
             {
-                this.Add(temp.Data);
-                temp = w._head.Next;
-                _size--;
+                if (temp.Data.Temperature < x && button)
+                {
+                    this.Remove(temp.Data);
+                }
+                else if (temp.Data.Temperature > x && !button)
+                {
+                    this.Remove(temp.Data);
+                }
+                temp = temp.Next;
+                i++;
             }
-            
             //throw new NotImplementedException();
         }
-
-
-
-
-
-
-
-
 
         public void FilterRange(DateTime dt, DateTime dt2)
         {
-            Node temp = _head;//<WeatherData> temp = _head;
+            Node temp = _head;
             while (temp != null)
             {
-                if(temp.Data.DateCheck<dt || _head.Data.DateCheck > dt2)
+                if (temp.Data.DateCheck < dt || temp.Data.DateCheck > dt2)
+                {
+                    this.Remove(temp.Data);
+                }
+                if (temp.Data.DateCheck < dt || temp.Data.DateCheck > dt2)
                 {
                     this.Remove(temp.Data);
                 }
                 temp = temp.Next;
             }
-        }
-
-        public void FilterTemp(double x, int button)
-        {
-            Node temp = _head;//<WeatherData> temp = _head;
-            while (temp != null)
-            {
-                if(temp.Data.Temperature > x && button == 1)
-                {
-                    this.Remove(temp.Data);
-                }
-                else if(temp.Data.Temperature<x && button == 0)
-                {
-                    this.Remove(temp.Data);
-                }
-                temp = temp.Next;
-            }
-            //throw new NotImplementedException();
         }
 
         public void FilterDateHistory(DateTime dt)
         {
-            Node temp = _head;//<WeatherData> temp = _head;
-            while(temp != null)
+            Node temp = _head;
+            while (temp != null)
             {
-                if(temp.Data.month!=dt.Month || temp.Data.day != dt.Day)
+                if (temp.Data.month != dt.Month || temp.Data.day != dt.Day)
                 {
                     this.Remove(temp.Data);
                 }
@@ -118,50 +117,14 @@ namespace Project3
 
 
 
-
-
-
-
-
-
-
-        public IEnumerator<WeatherData> GetEnumerator()
-        {
-            return new ListEnumerator(_head);
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-
-
-
-
-
-
-
-
-
-
-        public bool IsReadOnly => false; 
-
-        public bool IsFixedSize => false;
-
-        public object SyncRoot => throw new NotImplementedException();
-
-        public bool IsSynchronized => throw new NotImplementedException();
-
-        object IList.this[int index]
-        {
+        public object this[int index] {
             get
             {
                 if (_size < index - 1)
                 {
                     throw new IndexOutOfRangeException();
                 }
-                Node cur = _head;//<WeatherData> cur = _head;
+                Node cur = _head;
                 int i = 0;
                 while (cur != null)
                 {
@@ -178,7 +141,7 @@ namespace Project3
             {
                 if (_size < index - 1)
                 {
-                    Node cur = _head;//<WeatherData> cur = _head;
+                    Node cur = _head;
                     int i = 0;
                     while (cur != null)
                     {
@@ -194,61 +157,18 @@ namespace Project3
             }
         }
 
-        public WeatherData this[int index]
-        {
-            get
-            {
-                if (_size < index - 1)
-                {
-                    throw new IndexOutOfRangeException();
-                }
-                Node cur = _head;//<WeatherData> cur = _head;
-                int i = 0;
-                while(cur != null)
-                {
-                    if (i == index)
-                    {
-                        return cur.Data;
-                    }
-                    cur = cur.Next;
-                    i++;
-                }
-                return default(WeatherData);
-            }
-            set
-            {
-                if (_size < index - 1)
-                {
-                    Node cur = _head;//<WeatherData> cur = _head;
-                    int i = 0;
-                    while(cur != null)
-                    {
-                        if (i == index)
-                        {
-                            cur.Data = value;
-                            return;
-                        }
-                        cur = cur.Next;
-                        i++;
-                    }
-                }
-            }
-        }
 
+        public bool IsReadOnly => throw new NotImplementedException();
 
-        public int IndexOf(WeatherData item)
-        {
-            throw new NotImplementedException();
-        }
+        public bool IsFixedSize => throw new NotImplementedException();
 
-        public void Insert(int index, WeatherData item)
-        {
-            throw new NotImplementedException();
-        }
+        public object SyncRoot => throw new NotImplementedException();
 
-        public void RemoveAt(int index)
+        public bool IsSynchronized => throw new NotImplementedException();
+
+        public int Add(object value)
         {
-            throw new NotImplementedException();
+            return this.Add((WeatherData)value);
         }
 
         public void Clear()
@@ -256,53 +176,17 @@ namespace Project3
             throw new NotImplementedException();
         }
 
-        public bool Contains(WeatherData item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CopyTo(WeatherData[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public bool Remove(WeatherData item)
-        {
-            if (_size == 0) return false;
-            if (_head.Data.Equals(item))
-            {
-                _head = _head.Next;
-                if(_head == null)
-                {
-                    _tail = null;
-                }
-                _size--;
-                return true;
-            }
-            Node temp = _head;//<WeatherData> temp = _head;
-            while(temp.Next != null)
-            {
-                if (temp.Next.Data == item)
-                {
-                    temp.Next = temp.Next.Next;
-                    if (temp.Next == null) _tail = temp;
-                    _size--;
-                    return true;
-                }
-                temp = temp.Next;
-            }
-            return false;
-            //throw new NotImplementedException();
-        }
-
-        public int Add(object value)
-        {
-            this.Add((WeatherData)value);
-            return 1;
-        }
-
         public bool Contains(object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CopyTo(Array array, int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerator GetEnumerator()
         {
             throw new NotImplementedException();
         }
@@ -317,20 +201,57 @@ namespace Project3
             throw new NotImplementedException();
         }
 
-        public void Remove(object value)
+        public void Remove(object item)
         {
-            this.Remove((WeatherData)value);
+            this.Remove((WeatherData)item);
         }
 
-        public void CopyTo(Array array, int index)
+        public bool Remove(WeatherData item)
+        {
+            if (_size == 0) return false;
+            if (_head.Data.Equals(item))
+            {
+                _head = _head.Next;
+                if (_head == null)
+                {
+                    _tail = null;
+                }
+                _size--;
+                return true;
+            }
+            Node temp = _head;
+            while (temp.Next != null)
+            {
+                if (temp.Next.Data == item)
+                {
+                    temp.Next = temp.Next.Next;
+                    if (temp.Next == null) _tail = temp;
+                    _size--;
+                    return true;
+                }
+                temp = temp.Next;
+            }
+            return false;
+        }
+
+        public void RemoveAt(int index)
         {
             throw new NotImplementedException();
         }
 
-        private class Node//<WeatherData>
+
+
+
+
+
+
+
+
+
+        private class Node
         {
             private WeatherData _data;
-            private Node _next;//<WeatherData> _next;
+            private Node _next;
 
             public Node(WeatherData d)
             {
@@ -351,7 +272,7 @@ namespace Project3
                 }
             }
 
-            public Node Next//<WeatherData> Next
+            public Node Next
             {
                 get
                 {
@@ -366,22 +287,13 @@ namespace Project3
 
 
 
-
-
-
-
-
-
-
-
-
         private class ListEnumerator : IEnumerator<WeatherData>
         {
-            private Node _cur;//<WeatherData> _cur;
+            private Node _cur;
 
-            public ListEnumerator(Node first)//<WeatherData> first)
+            public ListEnumerator(Node first)
             {
-                _cur = new Node(default(WeatherData));//<WeatherData>(default(WeatherData));
+                _cur = new Node(default(WeatherData));
                 _cur.Next = first;
             }
 
@@ -418,6 +330,7 @@ namespace Project3
             }
         }
 
-
     }
+
+
 }

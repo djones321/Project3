@@ -11,6 +11,13 @@ namespace Project3
         DateTime dt;
         double temperature;
 
+        /// <summary>
+        /// constructor -- takes data from text file in form1.cs
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="d"></param>
+        /// <param name="y"></param>
+        /// <param name="temp"></param>
         public WeatherData(int m, int d, int y, double temp)
         {
             dt = new DateTime(y, m, d);
@@ -21,6 +28,9 @@ namespace Project3
             return dt.ToLongDateString() + ": " + temperature + " degrees";
         }
 
+        /// <summary>
+        /// get set methods
+        /// </summary>
         public int day
         {
             get
@@ -56,7 +66,9 @@ namespace Project3
                 return temperature;
             }
         }
-
+        /// <summary>
+        /// used for checks
+        /// </summary>
         public DateTime DateCheck
         {
             get
